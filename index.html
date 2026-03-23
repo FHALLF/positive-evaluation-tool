@@ -119,7 +119,7 @@ const toolData = {"tools": []}; // placeholder for shortened output
 function getRadio(name){const el=document.querySelector(`input[name="${name}"]:checked`);return el?el.value:null;}
 function getSelected(name){return [...document.querySelectorAll(`input[name="${name}"]:checked`)].map(x=>x.value);}
 
-funfunction recommendTools(user) {
+function recommendTools(user) {
   let candidates = toolData.tools;
 
   // 1. Filter by themes
