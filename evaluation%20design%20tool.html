@@ -1,0 +1,130 @@
+
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+<meta charset='UTF-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0'>
+<title>evaluation design tool</title>
+<style>
+body, .eval-container {
+  font-family: Arial, sans-serif;
+  color: #333;
+}
+.eval-container {
+  background: #f7f7f7;
+  padding: 20px;
+  border: 1px solid #ddd;
+  margin: 20px auto;
+  max-width: 800px;
+  border-radius: 6px;
+}
+.eval-section {
+  margin-bottom: 25px;
+  padding: 15px;
+  background: #fcfcfc;
+  border: 1px solid #e0e0e0;
+  border-radius: 6px;
+}
+.eval-section h3 {
+  margin-top: 0;
+  color: #444;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 6px;
+}
+label { display: block; margin: 8px 0; }
+button.eval-btn, .copy-btn, .pdf-btn {
+  background: #666; color: #fff; padding: 10px 18px;
+  border: none; border-radius: 4px; margin-top: 10px; cursor: pointer;
+}
+button.eval-btn:hover, .copy-btn:hover, .pdf-btn:hover { background: #444; }
+#output {
+  background: #fff;
+  border: 2px solid #ccc;
+  padding: 20px;
+  margin-top: 25px;
+  border-radius: 6px;
+}
+.copy-btn, .pdf-btn { background: #999; }
+.copy-btn:hover, .pdf-btn:hover { background: #777; }
+</style>
+</head>
+<body>
+<div class='eval-container'>
+  <h2>Evaluation Design Tool</h2>
+  <p>Answer the questions below to generate a tailored evaluation plan and timeline for your unit.</p>
+
+  <div class='eval-section'>
+    <h3>1. Unit Information</h3>
+    <label>Unit length (weeks): <input type='number' id='unitLength' min='1' max='40' value='6'></label>
+    <label>Formative week: <input type='number' id='formativeWeek' min='1' max='40'></label>
+    <label>Summative week: <input type='number' id='summativeWeek' min='1' max='40'></label>
+  </div>
+
+  <div class='eval-section'>
+    <h3>2. Student Characteristics</h3>
+    <label>Student confidence:
+      <input type='radio' name='confidence' value='Low'> Low
+      <input type='radio' name='confidence' value='Medium' checked> Medium
+      <input type='radio' name='confidence' value='High'> High
+    </label>
+    <label>Academic level:
+      <input type='radio' name='level' value='UG1' checked> UG1
+      <input type='radio' name='level' value='UG2'> UG2
+      <input type='radio' name='level' value='UG3'> UG3
+      <input type='radio' name='level' value='PG'> PG
+    </label>
+    <label>Preferred modalities:<br>
+      <input type='checkbox' name='modalities' value='visual'> Visual
+      <input type='checkbox' name='modalities' value='textual'> Textual
+      <input type='checkbox' name='modalities' value='audio'> Audio
+      <input type='checkbox' name='modalities' value='digital'> Digital
+      <input type='checkbox' name='modalities' value='discussion'> Discussion
+      <input type='checkbox' name='modalities' value='physical'> Physical
+    </label>
+  </div>
+
+  <div class='eval-section'>
+    <h3>3. Evaluation Themes</h3>
+    <label><input type='checkbox' name='themes' value='Student Experience'> Student Experience</label>
+    <label><input type='checkbox' name='themes' value='Engagement'> Engagement</label>
+    <label><input type='checkbox' name='themes' value='Student Learning'> Student Learning</label>
+    <label><input type='checkbox' name='themes' value='Attainment'> Attainment</label>
+    <label><input type='checkbox' name='themes' value='Student Journey'> Student Journey</label>
+    <label><input type='checkbox' name='themes' value='Belonging'> Community & Belonging</label>
+    <label><input type='checkbox' name='themes' value='Professional Practice'> Employability & Professional Practice</label>
+    <label><input type='checkbox' name='themes' value='Collaboration'> Collaboration / Group Work</label>
+    <label><input type='checkbox' name='themes' value='Inclusion'> Inclusion</label>
+    <label><input type='checkbox' name='themes' value='Feedback'> Assessment & Feedback</label>
+    <label><input type='checkbox' name='themes' value='Confidence'> Student Confidence</label>
+    <label><input type='checkbox' name='themes' value='Scaffolding'> Scaffolding of the Unit</label>
+    <label><input type='checkbox' name='themes' value='Workload'> Workload Perception</label>
+    <label><input type='checkbox' name='themes' value='Digital Confidence'> Digital Confidence</label>
+
+    <label><br>Allow in-depth activity?
+      <input type='radio' name='allowInDepth' value='Yes'> Yes
+      <input type='radio' name='allowInDepth' value='No' checked> No
+    </label>
+  </div>
+
+  <button class='eval-btn' onclick='generatePlan()'>Generate Evaluation Plan</button>
+  <div id='output'></div>
+  <button class='copy-btn' onclick='copyPlan()'>Copy to Clipboard</button>
+  <button class='pdf-btn' onclick='window.print()'>Save as PDF</button>
+</div>
+
+<script>
+/* Embedded tool data */
+const toolData = {"tools": []}; // placeholder for shortened output
+
+function getRadio(name){const el=document.querySelector(`input[name="${name}"]:checked`);return el?el.value:null;}
+function getSelected(name){return [...document.querySelectorAll(`input[name="${name}"]:checked`)].map(x=>x.value);}
+
+function recommendTools(user){return {tp1:{name:"Example Tool"},tp2:{name:"Example Tool 2"},staff:{name:"Staff Reflection"},tp3:{name:"Example Tool 3"}};}
+
+function generatePlan(){const user={unitLength:parseInt(document.getElementById("unitLength").value,10),formativeWeek:document.getElementById("formativeWeek").value,summativeWeek:document.getElementById("summativeWeek").value,studentConfidence:getRadio("confidence"),level:getRadio("level"),modalities:getSelected("modalities"),themes:getSelected("themes"),allowInDepth:getRadio("allowInDepth")};const recs=recommendTools(user);let html=`<h3>Your Evaluation Plan</h3>`;html+=`<p><strong>Touchpoint 1 (Start):</strong> ${recs.tp1.name}</p>`;html+=`<p><strong>Touchpoint 2 (Mid or Formative):</strong> ${recs.tp2.name}</p>`;html+=`<p><strong>Staff Reflection (Mandatory):</strong> Use the staff reflection form.</p>`;if(user.unitLength>3){html+=`<p><strong>Touchpoint 3 (End):</strong> ${recs.tp3.name}</p>`;}document.getElementById("output").innerHTML=html;}
+
+function copyPlan(){const text=document.getElementById("output").innerText;navigator.clipboard.writeText(text);alert("Plan copied to clipboard!");}
+</script>
+
+</body>
+</html>
