@@ -325,7 +325,7 @@ const toolData = {"tools": [
       "modality": ["visual","discussion"]
     }
   ]
-};]}; // placeholder for shortened output
+};
 
 function getRadio(name){const el=document.querySelector(`input[name="${name}"]:checked`);return el?el.value:null;}
 function getSelected(name){return [...document.querySelectorAll(`input[name="${name}"]:checked`)].map(x=>x.value);}
