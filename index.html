@@ -114,10 +114,12 @@ button.eval-btn:hover, .copy-btn:hover, .pdf-btn:hover { background: #444; }
 
 <script>
 /* Embedded tool data */
-const toolData = {"tools": [
+const toolData = {
+  "tools": [
     {
       "id": "quote_postcards",
       "name": "Quote Postcards",
+      "description": "Students write short statements or quotes about how they feel about the unit so far, giving a quick snapshot of their current experience.",
       "themes": ["Student Experience", "Engagement", "Belonging"],
       "timeDemand": "quick",
       "reflectiveDemand": "low",
@@ -129,6 +131,7 @@ const toolData = {"tools": [
     {
       "id": "confidence_board",
       "name": "Confidence Board",
+      "description": "A simple visual check‑in where students mark their confidence before and after an activity or session to show shifts in self‑perception.",
       "themes": ["Confidence", "Student Learning"],
       "timeDemand": "quick",
       "reflectiveDemand": "low",
@@ -140,6 +143,7 @@ const toolData = {"tools": [
     {
       "id": "board_of_promises",
       "name": "Board of Promises",
+      "description": "Students note what is going well and make a commitment about what they will do next, helping them clarify their progress and future steps.",
       "themes": ["Student Experience", "Confidence", "Scaffolding"],
       "timeDemand": "quick",
       "reflectiveDemand": "medium",
@@ -151,6 +155,7 @@ const toolData = {"tools": [
     {
       "id": "four_things",
       "name": "4 Things",
+      "description": "A quick reflective prompt where students identify something learned, enjoyed, surprising, and something they need more of.",
       "themes": ["Student Learning", "Engagement"],
       "timeDemand": "quick",
       "reflectiveDemand": "low",
@@ -162,6 +167,7 @@ const toolData = {"tools": [
     {
       "id": "advice_cards",
       "name": "Advice Cards",
+      "description": "Students create short advice notes for the next cohort, summarising what they learned and what future students should focus on.",
       "themes": ["Student Learning", "Employability & Professional Practice", "Confidence"],
       "timeDemand": "quick",
       "reflectiveDemand": "medium",
@@ -173,6 +179,7 @@ const toolData = {"tools": [
     {
       "id": "stop_start_continue",
       "name": "Stop, Start, Continue",
+      "description": "A structured reflection where students identify what they understand well, what they are ready to begin, and what they want to keep reinforcing.",
       "themes": ["Scaffolding", "Student Learning", "Engagement"],
       "timeDemand": "quick",
       "reflectiveDemand": "medium",
@@ -184,6 +191,7 @@ const toolData = {"tools": [
     {
       "id": "thematic_mapping",
       "name": "Thematic Mapping",
+      "description": "Students list key ideas or concepts they have learned, which are then grouped into themes to identify strengths, gaps, and emerging patterns.",
       "themes": ["Student Learning", "Attainment"],
       "timeDemand": "medium",
       "reflectiveDemand": "medium",
@@ -195,6 +203,7 @@ const toolData = {"tools": [
     {
       "id": "checklists_targets",
       "name": "Checklists & Targets",
+      "description": "Students create personalised checklists and milestones, then revisit them later to reflect on progress and next steps.",
       "themes": ["Scaffolding", "Student Learning", "Confidence"],
       "timeDemand": "quick",
       "reflectiveDemand": "medium",
@@ -206,6 +215,7 @@ const toolData = {"tools": [
     {
       "id": "experience_map",
       "name": "Experience Map",
+      "description": "Students draw or chart the highs, lows, and key moments of their journey through the unit to help reveal important learning experiences.",
       "themes": ["Student Journey", "Engagement", "Belonging"],
       "timeDemand": "medium",
       "reflectiveDemand": "medium",
@@ -217,6 +227,7 @@ const toolData = {"tools": [
     {
       "id": "building_blocks",
       "name": "Building Blocks",
+      "description": "A visual tool where students break the unit into developmental stages and reflect on their progress or confidence in each part.",
       "themes": ["Scaffolding","Student Learning","Confidence"],
       "timeDemand": "medium",
       "reflectiveDemand": "medium",
@@ -228,6 +239,7 @@ const toolData = {"tools": [
     {
       "id": "friendship_chats",
       "name": "Friendship Chats",
+      "description": "Students discuss prompt cards in pairs or small groups, generating deeper insights into their learning and experience through conversation.",
       "themes": ["Belonging","Student Experience","Confidence"],
       "timeDemand": "in-depth",
       "reflectiveDemand": "high",
@@ -239,6 +251,7 @@ const toolData = {"tools": [
     {
       "id": "audio_snapshots",
       "name": "Audio Snapshots",
+      "description": "Students record short audio reflections at different points in the unit, offering rich qualitative data about their experience.",
       "themes": ["Student Journey","Student Experience","Engagement"],
       "timeDemand": "in-depth",
       "reflectiveDemand": "medium-high",
@@ -250,6 +263,7 @@ const toolData = {"tools": [
     {
       "id": "padlet_dashboard",
       "name": "Structured Padlet",
+      "description": "A collaborative digital board where students respond under set categories to provide quick, organised feedback.",
       "themes": ["Feedback","Student Experience","Engagement","Digital Confidence"],
       "timeDemand": "quick",
       "reflectiveDemand": "low",
@@ -261,6 +275,7 @@ const toolData = {"tools": [
     {
       "id": "miro_mapping",
       "name": "Miro Mapping",
+      "description": "A digital mapping space where students co‑construct a visual representation of their learning or experience.",
       "themes": ["Learning","Collaboration","Student Journey"],
       "timeDemand": "medium",
       "reflectiveDemand": "medium",
@@ -272,6 +287,7 @@ const toolData = {"tools": [
     {
       "id": "collaging",
       "name": "Collaging",
+      "description": "A creative reflective task where students make a physical or digital collage to express their feelings, insights, or learning.",
       "themes": ["Experience","Belonging","Confidence","Inclusion"],
       "timeDemand": "in-depth",
       "reflectiveDemand": "high",
@@ -283,6 +299,7 @@ const toolData = {"tools": [
     {
       "id": "photo_elicitation",
       "name": "Photo Elicitation",
+      "description": "Students use photographs—either provided or chosen themselves—to discuss their experiences, perceptions, and challenges.",
       "themes": ["Student Experience","Student Journey","Belonging"],
       "timeDemand": "in-depth",
       "reflectiveDemand": "high",
@@ -294,6 +311,7 @@ const toolData = {"tools": [
     {
       "id": "observation",
       "name": "Observation",
+      "description": "A tutor‑led method where student behaviour, interaction, or engagement is captured using a structured observation template.",
       "themes": ["Engagement","Collaboration","Inclusion"],
       "timeDemand": "quick",
       "reflectiveDemand": "low",
@@ -305,6 +323,7 @@ const toolData = {"tools": [
     {
       "id": "radar_diagrams",
       "name": "Radar Diagrams",
+      "description": "A before‑and‑after diagram where students visually rate their confidence or skills across several areas to show growth over time.",
       "themes": ["Confidence","Attainment","Learning","Scaffolding"],
       "timeDemand": "quick",
       "reflectiveDemand": "medium",
@@ -316,6 +335,7 @@ const toolData = {"tools": [
     {
       "id": "collaborative_mapping",
       "name": "Collaborative Mapping",
+      "description": "A live co‑reflection exercise where the tutor draws a visual map based on students’ commentary about how the unit has felt.",
       "themes": ["Student Journey","Experience","Belonging"],
       "timeDemand": "medium",
       "reflectiveDemand": "high",
