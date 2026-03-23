@@ -114,7 +114,219 @@ button.eval-btn:hover, .copy-btn:hover, .pdf-btn:hover { background: #444; }
 
 <script>
 /* Embedded tool data */
-const toolData = {"tools": []}; // placeholder for shortened output
+const toolData = {"tools": [const toolData = {
+  "tools": [
+    {
+      "id": "quote_postcards",
+      "name": "Quote Postcards",
+      "themes": ["Student Experience", "Engagement", "Belonging"],
+      "timeDemand": "quick",
+      "reflectiveDemand": "low",
+      "repeatRequired": false,
+      "level": ["UG1", "UG2", "UG3", "PG"],
+      "bestTiming": ["start", "mid"],
+      "modality": ["textual"]
+    },
+    {
+      "id": "confidence_board",
+      "name": "Confidence Board",
+      "themes": ["Confidence", "Student Learning"],
+      "timeDemand": "quick",
+      "reflectiveDemand": "low",
+      "repeatRequired": true,
+      "level": ["UG1", "UG2", "UG3", "PG"],
+      "bestTiming": ["start", "end"],
+      "modality": ["visual"]
+    },
+    {
+      "id": "board_of_promises",
+      "name": "Board of Promises",
+      "themes": ["Student Experience", "Confidence", "Scaffolding"],
+      "timeDemand": "quick",
+      "reflectiveDemand": "medium",
+      "repeatRequired": false,
+      "level": ["UG1","UG2","UG3","PG"],
+      "bestTiming": ["mid"],
+      "modality": ["textual"]
+    },
+    {
+      "id": "four_things",
+      "name": "4 Things",
+      "themes": ["Student Learning", "Engagement"],
+      "timeDemand": "quick",
+      "reflectiveDemand": "low",
+      "repeatRequired": false,
+      "level": ["UG1","UG2","UG3","PG"],
+      "bestTiming": ["mid","end"],
+      "modality": ["textual"]
+    },
+    {
+      "id": "advice_cards",
+      "name": "Advice Cards",
+      "themes": ["Student Learning", "Employability & Professional Practice", "Confidence"],
+      "timeDemand": "quick",
+      "reflectiveDemand": "medium",
+      "repeatRequired": false,
+      "level": ["UG2","UG3","PG"],
+      "bestTiming": ["end"],
+      "modality": ["textual"]
+    },
+    {
+      "id": "stop_start_continue",
+      "name": "Stop, Start, Continue",
+      "themes": ["Scaffolding", "Student Learning", "Engagement"],
+      "timeDemand": "quick",
+      "reflectiveDemand": "medium",
+      "repeatRequired": false,
+      "level": ["UG1","UG2","UG3","PG"],
+      "bestTiming": ["mid"],
+      "modality": ["textual"]
+    },
+    {
+      "id": "thematic_mapping",
+      "name": "Thematic Mapping",
+      "themes": ["Student Learning", "Attainment"],
+      "timeDemand": "medium",
+      "reflectiveDemand": "medium",
+      "repeatRequired": true,
+      "level": ["UG1","UG2","UG3","PG"],
+      "bestTiming": ["mid","end"],
+      "modality": ["visual","discussion"]
+    },
+    {
+      "id": "checklists_targets",
+      "name": "Checklists & Targets",
+      "themes": ["Scaffolding", "Student Learning", "Confidence"],
+      "timeDemand": "quick",
+      "reflectiveDemand": "medium",
+      "repeatRequired": true,
+      "level": ["UG1","UG2","UG3","PG"],
+      "bestTiming": ["start","mid"],
+      "modality": ["textual"]
+    },
+    {
+      "id": "experience_map",
+      "name": "Experience Map",
+      "themes": ["Student Journey", "Engagement", "Belonging"],
+      "timeDemand": "medium",
+      "reflectiveDemand": "medium",
+      "repeatRequired": false,
+      "level": ["UG1","UG2","UG3","PG"],
+      "bestTiming": ["mid","end"],
+      "modality": ["visual"]
+    },
+    {
+      "id": "building_blocks",
+      "name": "Building Blocks",
+      "themes": ["Scaffolding","Student Learning","Confidence"],
+      "timeDemand": "medium",
+      "reflectiveDemand": "medium",
+      "repeatRequired": true,
+      "level": ["UG1","UG2","UG3","PG"],
+      "bestTiming": ["start","mid"],
+      "modality": ["visual"]
+    },
+    {
+      "id": "friendship_chats",
+      "name": "Friendship Chats",
+      "themes": ["Belonging","Student Experience","Confidence"],
+      "timeDemand": "in-depth",
+      "reflectiveDemand": "high",
+      "repeatRequired": false,
+      "level": ["UG2","UG3","PG"],
+      "bestTiming": ["mid"],
+      "modality": ["discussion","audio"]
+    },
+    {
+      "id": "audio_snapshots",
+      "name": "Audio Snapshots",
+      "themes": ["Student Journey","Student Experience","Engagement"],
+      "timeDemand": "in-depth",
+      "reflectiveDemand": "medium-high",
+      "repeatRequired": false,
+      "level": ["UG1","UG2","UG3","PG"],
+      "bestTiming": ["any"],
+      "modality": ["audio"]
+    },
+    {
+      "id": "padlet_dashboard",
+      "name": "Structured Padlet",
+      "themes": ["Feedback","Student Experience","Engagement","Digital Confidence"],
+      "timeDemand": "quick",
+      "reflectiveDemand": "low",
+      "repeatRequired": false,
+      "level": ["UG1","UG2","UG3","PG"],
+      "bestTiming": ["mid"],
+      "modality": ["digital","textual","visual"]
+    },
+    {
+      "id": "miro_mapping",
+      "name": "Miro Mapping",
+      "themes": ["Learning","Collaboration","Student Journey"],
+      "timeDemand": "medium",
+      "reflectiveDemand": "medium",
+      "repeatRequired": false,
+      "level": ["UG1","UG2","UG3","PG"],
+      "bestTiming": ["mid"],
+      "modality": ["digital","visual"]
+    },
+    {
+      "id": "collaging",
+      "name": "Collaging",
+      "themes": ["Experience","Belonging","Confidence","Inclusion"],
+      "timeDemand": "in-depth",
+      "reflectiveDemand": "high",
+      "repeatRequired": false,
+      "level": ["UG1","UG2","UG3","PG"],
+      "bestTiming": ["mid","end"],
+      "modality": ["visual","physical"]
+    },
+    {
+      "id": "photo_elicitation",
+      "name": "Photo Elicitation",
+      "themes": ["Student Experience","Student Journey","Belonging"],
+      "timeDemand": "in-depth",
+      "reflectiveDemand": "high",
+      "repeatRequired": false,
+      "level": ["UG1","UG2","UG3","PG"],
+      "bestTiming": ["mid"],
+      "modality": ["visual","discussion"]
+    },
+    {
+      "id": "observation",
+      "name": "Observation",
+      "themes": ["Engagement","Collaboration","Inclusion"],
+      "timeDemand": "quick",
+      "reflectiveDemand": "low",
+      "repeatRequired": false,
+      "level": ["UG1","UG2","UG3","PG"],
+      "bestTiming": ["any"],
+      "modality": ["observational"]
+    },
+    {
+      "id": "radar_diagrams",
+      "name": "Radar Diagrams",
+      "themes": ["Confidence","Attainment","Learning","Scaffolding"],
+      "timeDemand": "quick",
+      "reflectiveDemand": "medium",
+      "repeatRequired": true,
+      "level": ["UG1","UG2","UG3","PG"],
+      "bestTiming": ["start","end"],
+      "modality": ["visual"]
+    },
+    {
+      "id": "collaborative_mapping",
+      "name": "Collaborative Mapping",
+      "themes": ["Student Journey","Experience","Belonging"],
+      "timeDemand": "medium",
+      "reflectiveDemand": "high",
+      "repeatRequired": false,
+      "level": ["UG1","UG2","UG3","PG"],
+      "bestTiming": ["mid"],
+      "modality": ["visual","discussion"]
+    }
+  ]
+};]}; // placeholder for shortened output
 
 function getRadio(name){const el=document.querySelector(`input[name="${name}"]:checked`);return el?el.value:null;}
 function getSelected(name){return [...document.querySelectorAll(`input[name="${name}"]:checked`)].map(x=>x.value);}
