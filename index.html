@@ -119,7 +119,74 @@ const toolData = {"tools": []}; // placeholder for shortened output
 function getRadio(name){const el=document.querySelector(`input[name="${name}"]:checked`);return el?el.value:null;}
 function getSelected(name){return [...document.querySelectorAll(`input[name="${name}"]:checked`)].map(x=>x.value);}
 
-function recommendTools(user){return {tp1:{name:"Example Tool"},tp2:{name:"Example Tool 2"},staff:{name:"Staff Reflection"},tp3:{name:"Example Tool 3"}};}
+funfunction recommendTools(user) {
+  let candidates = toolData.tools;
+
+  // 1. Filter by themes
+  if (user.themes.length > 0) {
+    candidates = candidates.filter(t =>
+      t.themes.some(th => user.themes.includes(th))
+    );
+  }
+
+  // 2. Filter by student confidence
+  if (user.studentConfidence === "Low") {
+    candidates = candidates.filter(t => t.reflectiveDemand !== "high");
+  }
+
+  // 3. In‑depth activity permission
+  if (user.allowInDepth === "No") {
+    candidates = candidates.filter(t => t.timeDemand !== "in-depth");
+  }
+
+  // 4. Filter by modalities
+  if (user.modalities.length > 0) {
+    candidates = candidates.filter(t =>
+      t.modality.some(m => user.modalities.includes(m))
+    );
+  }
+
+  // 5. Filter by level
+  candidates = candidates.filter(t => t.level.includes(user.level));
+
+  // ==== ASSIGN TOUCHPOINTS ====
+  const recs = {};
+
+  // TP1 — Start of unit
+  recs.tp1 =
+    candidates.find(t => t.bestTiming.includes("start")) ||
+    candidates[0];
+
+  // TP2 — Mid or Formative
+  if (recs.tp1.repeatRequired) {
+    recs.tp2 = recs.tp1;
+  } else {
+    recs.tp2 =
+      candidates.find(t => t.bestTiming.includes("mid")) ||
+      candidates[1] ||
+      recs.tp1;
+  }
+
+  // STAFF REFLECTION — always after TP2
+  recs.staff = {
+    name: "Staff Reflection",
+    description: "Use the mid‑unit reflection form."
+  };
+
+  // TP3 — End of unit (only if >3 weeks)
+  if (user.unitLength > 3) {
+    if (recs.tp2.repeatRequired) {
+      recs.tp3 = recs.tp2;
+    } else {
+      recs.tp3 =
+        candidates.find(t => t.bestTiming.includes("end")) ||
+        candidates[2] ||
+        recs.tp2;
+    }
+  }
+
+  return recs;
+}
 
 function generatePlan(){const user={unitLength:parseInt(document.getElementById("unitLength").value,10),formativeWeek:document.getElementById("formativeWeek").value,summativeWeek:document.getElementById("summativeWeek").value,studentConfidence:getRadio("confidence"),level:getRadio("level"),modalities:getSelected("modalities"),themes:getSelected("themes"),allowInDepth:getRadio("allowInDepth")};const recs=recommendTools(user);let html=`<h3>Your Evaluation Plan</h3>`;html+=`<p><strong>Touchpoint 1 (Start):</strong> ${recs.tp1.name}</p>`;html+=`<p><strong>Touchpoint 2 (Mid or Formative):</strong> ${recs.tp2.name}</p>`;html+=`<p><strong>Staff Reflection (Mandatory):</strong> Use the staff reflection form.</p>`;if(user.unitLength>3){html+=`<p><strong>Touchpoint 3 (End):</strong> ${recs.tp3.name}</p>`;}document.getElementById("output").innerHTML=html;}
 
