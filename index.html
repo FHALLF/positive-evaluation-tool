@@ -455,48 +455,65 @@ function getSelected(name) {
 // ✅ RECOMMENDER ENGINE
 function recommendTools(user) {
 
-  let candidates = toolData.tools.filter(t =>
-    t.themes.some(theme => ciIncludes(user.themes, theme))
+  const tools = toolData.tools;
+
+  // ✅ Case-insensitive helper
+  const matchCI = (a, b) => a.toLowerCase() === b.toLowerCase();
+
+  // ✅ Filter by themes (case-insensitive)
+  let candidates = tools.filter(t =>
+    t.themes.some(theme =>
+      user.themes.some(u => matchCI(theme, u))
+    )
   );
 
-  candidates = candidates.filter(t => ciIncludes(t.level, user.level));
-
+  // ✅ Filter by level (case-insensitive)
   candidates = candidates.filter(t =>
-    t.modality.some(m => ciIncludes(user.modalities, m))
+    t.level.some(level =>
+      matchCI(level, user.level)
+    )
   );
 
+  // ✅ Filter by modality (case-insensitive)
+  candidates = candidates.filter(t =>
+    t.modality.some(m =>
+      user.modalities.some(u => matchCI(m, u))
+    )
+  );
+
+  // ✅ Confidence filter
   if (user.studentConfidence === "Low") {
     candidates = candidates.filter(t => !t.highConfidenceOnly);
   }
 
+  // ✅ SAFETY NET: if filters removed all tools, fall back to all tools
+  if (candidates.length === 0) {
+    candidates = [...tools];
+  }
+
+  // ✅ Build recommendations
   const recs = {};
 
   recs.tp1 =
     candidates.find(t => t.bestTiming.includes("start")) ||
     candidates[0];
 
-  if (recs.tp1.repeatRequired) {
-    recs.tp2 = recs.tp1;
-  } else {
-    recs.tp2 =
-      candidates.find(t => t.bestTiming.includes("mid")) ||
-      recs.tp1;
-  }
+  recs.tp2 =
+    recs.tp1.repeatRequired
+      ? recs.tp1
+      : candidates.find(t => t.bestTiming.includes("mid")) || recs.tp1;
 
   recs.staff = {
     name: "Staff Reflection",
     description: "Use the mid‑unit reflection form."
   };
 
-  if (user.unitLength > 3) {
-    if (recs.tp2.repeatRequired) {
-      recs.tp3 = recs.tp2;
-    } else {
-      recs.tp3 =
-        candidates.find(t => t.bestTiming.includes("end")) ||
-        recs.tp2;
-    }
-  }
+  recs.tp3 =
+    user.unitLength > 3
+      ? (recs.tp2.repeatRequired
+          ? recs.tp2
+          : candidates.find(t => t.bestTiming.includes("end")) || recs.tp2)
+      : null;
 
   return recs;
 }
