@@ -508,9 +508,16 @@ function recommendTools(user) {
     candidates.find(t => t.bestTiming.includes("start")) ||
     candidates[0];
 
-  recs.tp2 = recs.tp1.repeatRequired
+// ✅ FIXED TP2 LOGIC — no accidental duplication
+recs.tp2 =
+  recs.tp1.repeatRequired
     ? recs.tp1
-    : candidates.find(t => t.bestTiming.includes("mid")) || recs.tp1;
+    : candidates.find(t =>
+        t.bestTiming.includes("mid") &&
+        t.id !== recs.tp1.id
+      ) 
+      || candidates.find(t => t.id !== recs.tp1.id) 
+      || recs.tp1;
 
   recs.staff = { name: "Staff Reflection" };
 
