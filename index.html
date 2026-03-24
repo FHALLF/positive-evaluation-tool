@@ -126,6 +126,7 @@ button.eval-btn:hover, .copy-btn:hover, .pdf-btn:hover { background: #444; }
   <button class='pdf-btn' onclick='window.print()'>Save as PDF</button>
 </div>
 
+<!-- ✅ TOOL DATA BLOCK — LEAVE THIS AT THE TOP OF YOUR SCRIPTS -->
 <script>
 /* Embedded tool data */
 const toolData = {
@@ -362,6 +363,7 @@ const toolData = {
 };
 </script>
 
+<!-- ✅ MAIN SCRIPT BLOCK — LOGIC + WHY TOGGLES -->
 <script>
 // ✅ HELPER FUNCTIONS
 function getRadio(name) {
@@ -376,34 +378,28 @@ function getSelected(id) {
 
 // ✅ TOOL RECOMMENDER ENGINE
 function recommendTools(user) {
-  const toolData = window.toolData ? window.toolData.tools : [];
-  // Filter by themes
-  let candidates = toolData.filter(t =>
+
+  const toolDataArray = toolData.tools;   // ✅ FIXED
+
+  let candidates = toolDataArray.filter(t =>
     t.themes.some(theme => user.themes.includes(theme))
   );
 
-  // Filter by level
-  candidates = candidates.filter(t => t.levels.includes(user.level));
-
-  // Filter by modality
+  candidates = candidates.filter(t => t.level.includes(user.level));
   candidates = candidates.filter(t =>
-    t.modalities.some(m => user.modalities.includes(m))
+    t.modality.some(m => user.modalities.includes(m))
   );
 
-  // Confidence filter
   if (user.studentConfidence === "low") {
     candidates = candidates.filter(t => !t.highConfidenceOnly);
   }
 
-  // ✅ ASSIGN TOUCHPOINTS
   const recs = {};
 
-  // TP1
   recs.tp1 =
     candidates.find(t => t.bestTiming.includes("start")) ||
     candidates[0];
 
-  // TP2
   if (recs.tp1.repeatRequired) {
     recs.tp2 = recs.tp1;
   } else {
@@ -413,13 +409,11 @@ function recommendTools(user) {
       recs.tp1;
   }
 
-  // Staff Reflection
   recs.staff = {
     name: "Staff Reflection",
     description: "Use the mid‑unit reflection form."
   };
 
-  // TP3
   if (user.unitLength > 3) {
     if (recs.tp2.repeatRequired) {
       recs.tp3 = recs.tp2;
@@ -469,7 +463,7 @@ function generatePlan() {
     </div>
   `;
 
-  // ✅ STAFF REFLECTION (simple version)
+  // ✅ STAFF REFLECTION
   html += `
     <p><strong>Staff Reflection (Mandatory):</strong> Use the staff reflection form.</p>
   `;
