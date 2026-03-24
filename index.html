@@ -462,15 +462,39 @@ function generatePlan() {
   let html = `<h3>Your Evaluation Plan</h3>`;
 
   // ✅ This is the line you will REPLACE with your TP1 expanded block
-  html += `<p><strong>Touchpoint 1 (Start):</strong> ${recs.tp1.name}</p>`;
+html += `
+  <p><strong>Touchpoint 1 (Start):</strong> ${recs.tp1.name}</p>
+  <button class="why-btn" onclick="toggleWhy('tp1why')">Why this tool?</button>
+  <div id="tp1why" class="why-content">
+      <p>${recs.tp1.description || "Chosen because it aligns with your selected themes, timing and student preferences."}</p>
+  </div>
+`;
 
-  html += `<p><strong>Touchpoint 2 (Mid or Formative):</strong> ${recs.tp2.name}</p>`;
+ html += `
+  <p><strong>Touchpoint 2 (Mid or Formative):</strong> ${recs.tp2.name}</p>
+  <button class="why-btn" onclick="toggleWhy('tp2why')">Why this tool?</button>
+  <div id="tp2why" class="why-content">
+      <p>${recs.tp2.description || "Selected because it supports mid‑unit feedback and aligns with your chosen themes and delivery approach."}</p>
+  </div>
+`;
 
-  html += `<p><strong>Staff Reflection (Mandatory):</strong> Use the staff reflection form.</p>`;
+ html += `
+  <p><strong>Staff Reflection (Mandatory):</strong> Use the staff reflection form.</p>
+  <button class="why-btn" onclick="toggleWhy('staffwhy')">Why this tool?</button>
+  <div id="staffwhy" class="why-content">
+      <p>This provides teaching staff with structured time to reflect on the mid‑unit learning experience and adjust before the next delivery.</p>
+  </div>
+`;
 
-  if (user.unitLength > 3) {
-    html += `<p><strong>Touchpoint 3 (End):</strong> ${recs.tp3.name}</p>`;
-  }
+ if (user.unitLength > 3) {
+  html += `
+    <p><strong>Touchpoint 3 (End):</strong> ${recs.tp3.name}</p>
+    <button class="why-btn" onclick="toggleWhy('tp3why')">Why this tool?</button>
+    <div id="tp3why" class="why-content">
+        <p>${recs.tp3.description || "Used at the end of teaching to consolidate insights and capture final student reflections."}</p>
+    </div>
+  `;
+}
 
   document.getElementById("output").innerHTML = html;
 }
