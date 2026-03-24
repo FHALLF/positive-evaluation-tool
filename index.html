@@ -46,6 +46,20 @@ button.eval-btn:hover, .copy-btn:hover, .pdf-btn:hover { background: #444; }
 }
 .copy-btn, .pdf-btn { background: #999; }
 .copy-btn:hover, .pdf-btn:hover { background: #777; }
+  .why-content {
+  display: none;
+  margin: 8px 0 15px 15px;
+  padding-left: 10px;
+  border-left: 3px solid #ccc;
+  font-size: 0.9em;
+}
+
+.why-btn {
+  margin: 5px 0;
+  padding: 3px 8px;
+  font-size: 0.85em;
+  cursor: pointer;
+}
 </style>
 </head>
 <body>
@@ -418,7 +432,10 @@ function recommendTools(user) {
 
   return recs;
 }
-
+function toggleWhy(id) {
+  const el = document.getElementById(id);
+  el.style.display = el.style.display === "block" ? "none" : "block";
+}
 function generatePlan(){const user={unitLength:parseInt(document.getElementById("unitLength").value,10),formativeWeek:document.getElementById("formativeWeek").value,summativeWeek:document.getElementById("summativeWeek").value,studentConfidence:getRadio("confidence"),level:getRadio("level"),modalities:getSelected("modalities"),themes:getSelected("themes"),allowInDepth:getRadio("allowInDepth")};const recs=recommendTools(user);let html=`<h3>Your Evaluation Plan</h3>`;html+=`<p><strong>Touchpoint 1 (Start):</strong> ${recs.tp1.name}</p>`;html+=`<p><strong>Touchpoint 2 (Mid or Formative):</strong> ${recs.tp2.name}</p>`;html+=`<p><strong>Staff Reflection (Mandatory):</strong> Use the staff reflection form.</p>`;if(user.unitLength>3){html+=`<p><strong>Touchpoint 3 (End):</strong> ${recs.tp3.name}</p>`;}document.getElementById("output").innerHTML=html;}
 
 function copyPlan(){const text=document.getElementById("output").innerText;navigator.clipboard.writeText(text);alert("Plan copied to clipboard!");}
