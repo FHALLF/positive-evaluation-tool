@@ -361,40 +361,47 @@ const toolData = {
   ]
 };
 
-function getRadio(name){const el=document.querySelector(`input[name="${name}"]:checked`);return el?el.value:null;}
-function getSelected(name){return [...document.querySelectorAll(`input[name="${name}"]:checked`)].map(x=>x.value);}
+<script>
+// ==== HELPER FUNCTIONS ====
+
+function getRadio(name) {
+  const el = document.querySelector(`input[name="${name}"]:checked`);
+  return el ? el.value : null;
+}
+
+function getSelected(id) {
+  const opts = [...document.getElementById(id).options].filter(o => o.selected);
+  return opts.map(o => o.value);
+}
+
+// ==== TOOL RECOMMENDER ENGINE ====
 
 function recommendTools(user) {
-  let candidates = toolData.tools;
+  // Load tool data from hidden JSON tag
+  const toolData = JSON.parse(document.getElementById("toolData").textContent);
 
-  // 1. Filter by themes
-  if (user.themes.length > 0) {
-    candidates = candidates.filter(t =>
-      t.themes.some(th => user.themes.includes(th))
-    );
+  // Filter by themes → must match at least one
+  let candidates = toolData.filter(t =>
+    t.themes.some(theme => user.themes.includes(theme))
+  );
+
+  // Filter by level
+  candidates = candidates.filter(t => t.levels.includes(user.level));
+
+  // Filter by modality
+  candidates = candidates.filter(t =>
+    t.modalities.some(m => user.modalities.includes(m))
+  );
+
+  // If student confidence low → prioritise tools supporting low confidence
+  if (user.studentConfidence === "low") {
+    candidates = candidates.filter(t => !t.highConfidenceOnly);
   }
 
-  // 2. Filter by student confidence
-  if (user.studentConfidence === "Low") {
-    candidates = candidates.filter(t => t.reflectiveDemand !== "high");
-  }
-
-  // 3. In‑depth activity permission
-  if (user.allowInDepth === "No") {
-    candidates = candidates.filter(t => t.timeDemand !== "in-depth");
-  }
-
-  // 4. Filter by modalities
-  if (user.modalities.length > 0) {
-    candidates = candidates.filter(t =>
-      t.modality.some(m => user.modalities.includes(m))
-    );
-  }
-
-  // 5. Filter by level
-  candidates = candidates.filter(t => t.level.includes(user.level));
-
+  // ============================================================================
   // ==== ASSIGN TOUCHPOINTS ====
+  // ============================================================================
+
   const recs = {};
 
   // TP1 — Start of unit
@@ -418,7 +425,7 @@ function recommendTools(user) {
     description: "Use the mid‑unit reflection form."
   };
 
-  // TP3 — End of unit (only if >3 weeks)
+  // TP3 — End of unit (only if > 3 weeks)
   if (user.unitLength > 3) {
     if (recs.tp2.repeatRequired) {
       recs.tp3 = recs.tp2;
@@ -432,13 +439,55 @@ function recommendTools(user) {
 
   return recs;
 }
+
+// ==================================================================================
+// ==== GENERATE PLAN OUTPUT ====
+// ==================================================================================
+
+function generatePlan() {
+  const user = {
+    unitLength: parseInt(document.getElementById("unitLength").value, 10),
+    formativeWeek: document.getElementById("formativeWeek").value,
+    summativeWeek: document.getElementById("summativeWeek").value,
+    studentConfidence: getRadio("confidence"),
+    level: getRadio("level"),
+    modalities: getSelected("modalities"),
+    themes: getSelected("themes"),
+    allowInDepth: getRadio("allowInDepth")
+  };
+
+  const recs = recommendTools(user);
+
+  // ✅ This is the line you were trying to locate
+  let html = `<h3>Your Evaluation Plan</h3>`;
+
+  // ✅ This is the line you will REPLACE with your TP1 expanded block
+  html += `<p><strong>Touchpoint 1 (Start):</strong> ${recs.tp1.name}</p>`;
+
+  html += `<p><strong>Touchpoint 2 (Mid or Formative):</strong> ${recs.tp2.name}</p>`;
+
+  html += `<p><strong>Staff Reflection (Mandatory):</strong> Use the staff reflection form.</p>`;
+
+  if (user.unitLength > 3) {
+    html += `<p><strong>Touchpoint 3 (End):</strong> ${recs.tp3.name}</p>`;
+  }
+
+  document.getElementById("output").innerHTML = html;
+}
+
+function copyPlan() {
+  const text = document.getElementById("output").innerText;
+  navigator.clipboard.writeText(text);
+  alert("Plan copied to clipboard!");
+}
+
+// ✅ Your toggle function
 function toggleWhy(id) {
   const el = document.getElementById(id);
   el.style.display = el.style.display === "block" ? "none" : "block";
 }
-function generatePlan(){const user={unitLength:parseInt(document.getElementById("unitLength").value,10),formativeWeek:document.getElementById("formativeWeek").value,summativeWeek:document.getElementById("summativeWeek").value,studentConfidence:getRadio("confidence"),level:getRadio("level"),modalities:getSelected("modalities"),themes:getSelected("themes"),allowInDepth:getRadio("allowInDepth")};const recs=recommendTools(user);let html=`<h3>Your Evaluation Plan</h3>`;html+=`<p><strong>Touchpoint 1 (Start):</strong> ${recs.tp1.name}</p>`;html+=`<p><strong>Touchpoint 2 (Mid or Formative):</strong> ${recs.tp2.name}</p>`;html+=`<p><strong>Staff Reflection (Mandatory):</strong> Use the staff reflection form.</p>`;if(user.unitLength>3){html+=`<p><strong>Touchpoint 3 (End):</strong> ${recs.tp3.name}</p>`;}document.getElementById("output").innerHTML=html;}
+</script>
 
-function copyPlan(){const text=document.getElementById("output").innerText;navigator.clipboard.writeText(text);alert("Plan copied to clipboard!");}
 </script>
 
 </body>
