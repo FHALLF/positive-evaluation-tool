@@ -361,9 +361,9 @@ const toolData = {
   ]
 };
 
-<script>
-// ==== HELPER FUNCTIONS ====
 
+<script>
+// ✅ HELPER FUNCTIONS
 function getRadio(name) {
   const el = document.querySelector(`input[name="${name}"]:checked`);
   return el ? el.value : null;
@@ -374,13 +374,10 @@ function getSelected(id) {
   return opts.map(o => o.value);
 }
 
-// ==== TOOL RECOMMENDER ENGINE ====
-
+// ✅ TOOL RECOMMENDER ENGINE
 function recommendTools(user) {
-  // Load tool data from hidden JSON tag
-  const toolData = JSON.parse(document.getElementById("toolData").textContent);
-
-  // Filter by themes → must match at least one
+  const toolData = window.toolData ? window.toolData.tools : [];
+  // Filter by themes
   let candidates = toolData.filter(t =>
     t.themes.some(theme => user.themes.includes(theme))
   );
@@ -393,23 +390,20 @@ function recommendTools(user) {
     t.modalities.some(m => user.modalities.includes(m))
   );
 
-  // If student confidence low → prioritise tools supporting low confidence
+  // Confidence filter
   if (user.studentConfidence === "low") {
     candidates = candidates.filter(t => !t.highConfidenceOnly);
   }
 
-  // ============================================================================
-  // ==== ASSIGN TOUCHPOINTS ====
-  // ============================================================================
-
+  // ✅ ASSIGN TOUCHPOINTS
   const recs = {};
 
-  // TP1 — Start of unit
+  // TP1
   recs.tp1 =
     candidates.find(t => t.bestTiming.includes("start")) ||
     candidates[0];
 
-  // TP2 — Mid or Formative
+  // TP2
   if (recs.tp1.repeatRequired) {
     recs.tp2 = recs.tp1;
   } else {
@@ -419,13 +413,13 @@ function recommendTools(user) {
       recs.tp1;
   }
 
-  // STAFF REFLECTION — always after TP2
+  // Staff Reflection
   recs.staff = {
     name: "Staff Reflection",
     description: "Use the mid‑unit reflection form."
   };
 
-  // TP3 — End of unit (only if > 3 weeks)
+  // TP3
   if (user.unitLength > 3) {
     if (recs.tp2.repeatRequired) {
       recs.tp3 = recs.tp2;
@@ -440,10 +434,7 @@ function recommendTools(user) {
   return recs;
 }
 
-// ==================================================================================
-// ==== GENERATE PLAN OUTPUT ====
-// ==================================================================================
-
+// ✅ GENERATE PLAN WITH ALL WHY TOGGLES
 function generatePlan() {
   const user = {
     unitLength: parseInt(document.getElementById("unitLength").value, 10),
@@ -458,61 +449,59 @@ function generatePlan() {
 
   const recs = recommendTools(user);
 
-  // ✅ This is the line you were trying to locate
   let html = `<h3>Your Evaluation Plan</h3>`;
 
-  // ✅ This is the line you will REPLACE with your TP1 expanded block
-html += `
-  <p><strong>Touchpoint 1 (Start):</strong> ${recs.tp1.name}</p>
-  <button class="why-btn" onclick="toggleWhy('tp1why')">Why this tool?</button>
-  <div id="tp1why" class="why-content">
-      <p>${recs.tp1.description || "Chosen because it aligns with your selected themes, timing and student preferences."}</p>
-  </div>
-`;
-
- html += `
-  <p><strong>Touchpoint 2 (Mid or Formative):</strong> ${recs.tp2.name}</p>
-  <button class="why-btn" onclick="toggleWhy('tp2why')">Why this tool?</button>
-  <div id="tp2why" class="why-content">
-      <p>${recs.tp2.description || "Selected because it supports mid‑unit feedback and aligns with your chosen themes and delivery approach."}</p>
-  </div>
-`;
-
- html += `
-  <p><strong>Staff Reflection (Mandatory):</strong> Use the staff reflection form.</p>
-  <button class="why-btn" onclick="toggleWhy('staffwhy')">Why this tool?</button>
-  <div id="staffwhy" class="why-content">
-      <p>This provides teaching staff with structured time to reflect on the mid‑unit learning experience and adjust before the next delivery.</p>
-  </div>
-`;
-
- if (user.unitLength > 3) {
+  // ✅ TP1
   html += `
-    <p><strong>Touchpoint 3 (End):</strong> ${recs.tp3.name}</p>
-    <button class="why-btn" onclick="toggleWhy('tp3why')">Why this tool?</button>
-    <div id="tp3why" class="why-content">
-        <p>${recs.tp3.description || "Used at the end of teaching to consolidate insights and capture final student reflections."}</p>
+    <p><strong>Touchpoint 1 (Start):</strong> ${recs.tp1.name}</p>
+    <button class="why-btn" onclick="toggleWhy('tp1why')">Why this tool?</button>
+    <div id="tp1why" class="why-content">
+        <p>${recs.tp1.description || "Chosen because it aligns with your selected themes, timing and student preferences."}</p>
     </div>
   `;
-}
+
+  // ✅ TP2
+  html += `
+    <p><strong>Touchpoint 2 (Mid or Formative):</strong> ${recs.tp2.name}</p>
+    <button class="why-btn" onclick="toggleWhy('tp2why')">Why this tool?</button>
+    <div id="tp2why" class="why-content">
+        <p>${recs.tp2.description || "Selected because it supports mid‑unit feedback and aligns with your chosen themes and delivery approach."}</p>
+    </div>
+  `;
+
+  // ✅ STAFF REFLECTION (simple version)
+  html += `
+    <p><strong>Staff Reflection (Mandatory):</strong> Use the staff reflection form.</p>
+  `;
+
+  // ✅ TP3
+  if (user.unitLength > 3) {
+    html += `
+      <p><strong>Touchpoint 3 (End):</strong> ${recs.tp3.name}</p>
+      <button class="why-btn" onclick="toggleWhy('tp3why')">Why this tool?</button>
+      <div id="tp3why" class="why-content">
+          <p>${recs.tp3.description || "Used at the end of teaching to consolidate insights and capture final student reflections."}</p>
+      </div>
+    `;
+  }
 
   document.getElementById("output").innerHTML = html;
 }
 
+// ✅ COPY PLAN
 function copyPlan() {
   const text = document.getElementById("output").innerText;
   navigator.clipboard.writeText(text);
   alert("Plan copied to clipboard!");
 }
 
-// ✅ Your toggle function
+// ✅ TOGGLE WHY SECTIONS
 function toggleWhy(id) {
   const el = document.getElementById(id);
   el.style.display = el.style.display === "block" ? "none" : "block";
 }
 </script>
 
-</script>
 
 </body>
 </html>
