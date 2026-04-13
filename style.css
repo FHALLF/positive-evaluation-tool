@@ -1,0 +1,167 @@
+/* =========================
+   BASE SETUP
+========================= */
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  background: #f6f7f5;
+  color: #1f1f1f;
+  line-height: 1.6;
+  margin: 0;
+  padding: 2.5rem 1rem;
+}
+
+/* =========================
+   MAIN TOOL CONTAINER
+========================= */
+
+.tool-container {
+  max-width: 900px;
+  margin: 0 auto;
+  background: #ffffff;
+  padding: 3rem 3.5rem;
+  border-radius: 14px;
+  box-shadow: 0 12px 35px rgba(0,0,0,0.08);
+}
+
+/* =========================
+   TYPOGRAPHY
+========================= */
+
+h1 {
+  font-size: 2rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+h2 {
+  font-size: 1.35rem;
+  font-weight: 500;
+  margin-top: 2.8rem;
+  margin-bottom: 1.2rem;
+  padding-left: 0.8rem;
+  border-left: 5px solid #6b9cff; /* accent colour */
+}
+
+p {
+  margin-top: 0;
+}
+
+.intro {
+  font-size: 1.05rem;
+  color: #555;
+  margin-bottom: 2.2rem;
+  max-width: 720px;
+}
+
+/* =========================
+   FORM ELEMENTS
+========================= */
+
+label {
+  display: block;
+  font-weight: 500;
+  margin-bottom: 0.4rem;
+}
+
+input,
+textarea,
+select {
+  width: 100%;
+  padding: 0.8rem 0.9rem;
+  font-size: 0.95rem;
+  border-radius: 10px;
+  border: 1px solid #d9d9d9;
+  background: #fafafa;
+  margin-bottom: 1.4rem;
+  font-family: inherit;
+}
+
+textarea {
+  min-height: 120px;
+}
+
+/* Focus = gentle, not clinical */
+input:focus,
+textarea:focus,
+select:focus {
+  outline: none;
+  border-color: #6b9cff;
+  background: #ffffff;
+}
+
+/* =========================
+   SECTIONS (OPTIONAL WRAP)
+========================= */
+
+.section {
+  background: #fcfcfb;
+  border: 1px solid #ededed;
+  padding: 1.8rem;
+  border-radius: 12px;
+  margin-bottom: 2.4rem;
+}
+
+/* =========================
+   BUTTONS
+========================= */
+
+button {
+  background: #6b9cff;
+  color: white;
+  padding: 0.75rem 1.6rem;
+  border-radius: 999px;
+  border: none;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #557fd1;
+}
+
+/* =========================
+   PRINT & PDF STYLES
+========================= */
+
+@media print {
+
+  body {
+    background: white;
+    padding: 0;
+    font-size: 11pt;
+  }
+
+  .tool-container {
+    box-shadow: none;
+    border-radius: 0;
+    padding: 2cm;
+  }
+
+  h1 {
+    font-size: 20pt;
+  }
+
+  h2 {
+    font-size: 13pt;
+    border-left: none;
+    border-bottom: 1px solid #bbb;
+    padding-left: 0;
+    padding-bottom: 0.3rem;
+  }
+
+  input,
+  textarea,
+  select {
+    border: 1px solid #000;
+    background: white;
+  }
+
+  button {
+    display: none;
+  }
+}
